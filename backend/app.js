@@ -6,7 +6,7 @@ var cors = require("cors");
 
 var indexRouter = require('./routes/index');
 var playlistsRouter = require('./routes/playlists');
-var tokenRouter = require('./routes/access');
+var tokenRouter = require('./routes/callback');
 
 
 var app = express();
@@ -26,6 +26,6 @@ app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/playlists', playlistsRouter);
-app.use('/access-token', tokenRouter);
+app.use('/callback', tokenRouter);
 
 module.exports = app;

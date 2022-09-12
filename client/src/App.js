@@ -1,7 +1,7 @@
 import React from 'react';
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route, Redirect} from 'react-router-dom';
 import logo from './logo.svg';
-import Callback from './components/Callback'
+import Playlists from './components/Playlists';
 import Authorize from './components/Authorize';
 import './App.css';
 
@@ -9,7 +9,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Authorize />}/>
-      <Route path='/callback' element={<Callback />}/>
+      <Route path='/playlists' element={<Playlists />}/>
     </Routes>
   )
 }

@@ -4,42 +4,36 @@ const queryString = require("node:querystring")
 scopes = ['user-top-read', 'playlist-modify-private', 'playlist-modify-public']
 
 function authorize_link() {
-    var authorization_link = "https://accounts.spotify.com/authorize?client_id=" + process.env.CLIENT_ID + "&response_type=code&redirect_uri=" + encodeURIComponent(process.env.REDIRECT_URI) + "&scope=" + encodeURIComponent(scopes.join(' '));
+    var authorization_link = "https://accounts.spotify.com/authorize?client_id=" + process.env.CLIENT_ID + "&response_type=code&redirect_uri=" + encodeURIComponent(process.env.REDIRECT_URI) + "&show_dialog=true&scope=" + encodeURIComponent(scopes.join(' '));
     console.log(authorization_link);
     return authorization_link;
 }
 
- function authorize_code(query_code) {
-    // let tokenLink = queryString.stringify({
-    //     grant_type: "authorization_code",
-    //     code: query_code,
-    //     redirect_uri: process.env.REDIRECT_URI,
-    //     client_id: process.env.CLIENT_ID,
-    //     client_secret: process.env.CLIENT_SECRET
-    // });
+ async function authorize_code(query_code) {
+    try{
+        let tokenLink = queryString.stringify({
+            grant_type: "authorization_code",
+            code: query_code,
+            redirect_uri: process.env.REDIRECT_URI,
+        });
 
-    // console.log(tokenLink)
-    const spotifyResponse = axios.post(
-        "https://accounts.spotify.com/api/token?", 
-        {
-            params: {
-                grant_type: "authorization_code",
-                code: query_code,
-                redirect_uri: process.env.REDIRECT_URI,
+        const spotifyResponse = await axios.post(
+            "https://accounts.spotify.com/api/token", data=tokenLink,
+            {
+                headers: {
+                    Authorization: "Basic " + process.env.BASE64_AUTHORIZATION,
+                    'Content-Type':'application/x-www-form-urlencoded'
+                },
             }
-        },
-        {
-            headers: {
-                Authorization: "Basic " + process.env.BASE64_AUTHORIZATION,
-                'Content-Type':'application/x-www-form-urlencoded'
-            },
-        }
-    );
+        );
+        
+        console.log(spotifyResponse.data.access_token);
 
-    
-    console.log(spotifyResponse.data);
-
-    return spotifyResponse.data.access_token;
+        return spotifyResponse.data.access_token;
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 async function playlists(access_token) {
@@ -59,4 +53,4 @@ async function playlists(access_token) {
 
 }
 
-module.exports ={authorize_link, authorize_code, playlists}
+module.exports ={authorize_link, authorize_code,playlists}
