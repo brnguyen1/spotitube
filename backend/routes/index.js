@@ -5,7 +5,6 @@ const api = require('../services/api')
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  console.log(api.authorize_link());
   var a_link = api.authorize_link();
   res.send(a_link);
 });

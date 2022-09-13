@@ -7,15 +7,11 @@ var cors = require("cors");
 var indexRouter = require('./routes/index');
 var playlistsRouter = require('./routes/playlists');
 var tokenRouter = require('./routes/callback');
-
+var youtubeRouter = require('./routes/youtube');
 
 var app = express();
 const dotenv = require('dotenv');
 dotenv.config();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -27,5 +23,7 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/playlists', playlistsRouter);
 app.use('/callback', tokenRouter);
+app.use('/youtube', youtubeRouter);
+
 
 module.exports = app;
