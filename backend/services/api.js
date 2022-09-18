@@ -7,7 +7,6 @@ scopes = ['user-top-read', 'playlist-modify-private', 'playlist-modify-public']
 
 function authorize_link() {
     var authorization_link = "https://accounts.spotify.com/authorize?client_id=" + process.env.SPOTIFY_CLIENT_ID + "&response_type=code&redirect_uri=" + encodeURIComponent(process.env.SPOTIFY_REDIRECT_URI) + "&scope=" + encodeURIComponent(scopes.join(' '));
-    console.log(authorization_link);
     return authorization_link;
 }
 
@@ -29,8 +28,6 @@ function authorize_link() {
             }
         );
         
-        console.log(spotifyResponse.data.access_token);
-
         return spotifyResponse.data.access_token;
     }
     catch(error){
@@ -38,28 +35,52 @@ function authorize_link() {
     }
 }
 
+async function getSpotifyToken(){
+    let res = await axios.get("http://localhost:8888/callback/token");
+    return res.data;
+}
+
 // YOUTUBE FUNCTIONS
 const ytScopes = ['https://www.googleapis.com/auth/youtube', 'https://www.googleapis.com/auth/youtubepartner']
 
 const oauth2Client = new google.auth.OAuth2(
-    process.env.YOUTUBE_CLIENT_ID,
-    process.env.YOUTUBE_CLIENT_SECRET,
-    process.env.YOUTUBE_REDIRECT_URI
-);
+    '555541083874-b1o2jhg5nlqq5d6jt8qecvav95d6tqo7.apps.googleusercontent.com',
+    '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',
+    'http://localhost:8888/youtube/auth-code'
+  );
 
-function ytAuthLink() {
-    const ytAuthUrl = oauth2Client.generateAuthUrl({
+const ytAuthUrl = oauth2Client.generateAuthUrl({
     access_type: 'offline',
-
     scope: ytScopes
-    });
+});
 
-    return ytAuthUrl;
-}
-
-function ytGetToken(query_code){
-    let { tokens } = oauth2Client.getToken(q.code);
+function setCredentials(query_code){
+    let { tokens } = oauth2Client.getToken(query_code);
     oauth2Client.setCredentials(tokens);
 }
 
-module.exports ={authorize_link, authorize_code, ytAuthLink, ytGetToken}
+async function getPlaylistTracks(endpoint){
+    var token = await getSpotifyToken();
+    const spotifyReponse = await axios.get(endpoint, {
+        headers: {'Authorization': 'Bearer ' + token}
+    })
+    return spotifyReponse.data.items;
+}
+
+function parseTracks(playlist){
+    tracks = [];
+    for(track of playlist){
+        trackName = track.track.name;
+        artistName = track.track.artists[0].name;
+        tracks.push(trackName + ' by ' + artistName)
+    }  
+}
+
+function makePlaylist(title){
+    google.youtube.playlists.insert({
+        part:{
+            'snippet.title': title
+        }
+    })
+}
+module.exports ={authorize_link, authorize_code, ytAuthUrl, setCredentials, getPlaylistTracks, parseTracks, makePlaylist}

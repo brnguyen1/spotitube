@@ -3,7 +3,7 @@ var router = express.Router();
 
 const api = require('../services/api')
 
-var accessToken ='blank';
+var accessToken;
 
 router.get('/', async function(req, res) {
     accessToken = await api.authorize_code(req.query.code)

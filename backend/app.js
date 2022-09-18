@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cors = require("cors");
 
 var indexRouter = require('./routes/index');
-var playlistsRouter = require('./routes/playlists');
 var tokenRouter = require('./routes/callback');
 var youtubeRouter = require('./routes/youtube');
 
@@ -21,7 +20,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.use('/', indexRouter);
-app.use('/playlists', playlistsRouter);
 app.use('/callback', tokenRouter);
 app.use('/youtube', youtubeRouter);
 
