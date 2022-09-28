@@ -1,15 +1,15 @@
 # spotitube
 
-##Initializing backend and client
+## Initializing backend and client
   cd into client and run
   ### npm install
   repeat for the backend
 
-##Starting backend
+## Starting backend
   cd into backend folder and run following command:
   ### npm start
   
-##Starting client
+## Starting client
   cd into client and run following command:
   ### npm start
   
