@@ -14,3 +14,12 @@
   ### npm start
   
 Both client and backend must ran at the same time.
+
+## Technologies used
+### Frontend
+  React.js
+### Backend
+  Express.js
+
+### Interesting Packages to Look Up
+Axios
