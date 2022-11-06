@@ -1,6 +1,5 @@
 import React from 'react';
-import {Routes, Route, Redirect} from 'react-router-dom';
-import logo from './logo.svg';
+import {Routes, Route} from 'react-router-dom';
 import Playlists from './components/Playlists';
 import Authorize from './components/Authorize';
 import './App.css';

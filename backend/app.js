@@ -3,9 +3,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require("cors");
+var sessions = require('express-session')
 
 var indexRouter = require('./routes/index');
-var tokenRouter = require('./routes/callback');
+var spotifyRouter = require('./routes/spotify');
 var youtubeRouter = require('./routes/youtube');
 
 var app = express();
@@ -19,9 +20,20 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.use('/', indexRouter);
-app.use('/callback', tokenRouter);
-app.use('/youtube', youtubeRouter);
+// creating 24 hours from milliseconds
+const oneDay = 1000 * 60 * 60 * 24;
 
+//session middleware
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    cookie: {
+        maxAge: oneDay,
+        httpOnly: false
+    },
+}));
+
+app.use('/', indexRouter);
+app.use('/callback', spotifyRouter);
+app.use('/youtube', youtubeRouter);
 
 module.exports = app;
