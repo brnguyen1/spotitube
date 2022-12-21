@@ -28,7 +28,7 @@ async function authorize_code(query_code) {
             "https://accounts.spotify.com/api/token", data = tokenLink,
             {
                 headers: {
-                    Authorization: "Basic " + process.env.SPOTIFY_BASE64_AUTHORIZATION,
+                    Authorization: "Basic " + Buffer.from(process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET).toString('base64'),
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
             }

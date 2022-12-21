@@ -72,7 +72,7 @@ async function insert_playlist(playlist) {
         auth: oauth2Client
     })
 
-    let new_playlist_res = await youtube.playlists.insert({
+    let new_playlist_res = youtube.playlists.insert({
         "part": [
             "snippet, status"
         ],
@@ -90,12 +90,24 @@ async function insert_playlist(playlist) {
 
     let playlist_id = new_playlist_res.data.id
 
-    let track_ids = playlist.tracks.map(track => {
+    let track_ids = await playlist.tracks.map(track => {
         return get_track_id(track)
     });
 
+    console.log(track_ids)
+
     track_ids.forEach(track_id => {
-        insert_track(playlist_id, track_id);
+        while (true) {
+            try {
+                insert_track(playlist_id, track_id);
+                break;
+            }
+            catch (error) {
+                console.error(error)
+            }
+            setTimeout(() => { resolve() }, 3000)
+        }
+
     });
 
 }
