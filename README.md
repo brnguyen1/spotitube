@@ -2,7 +2,7 @@
 
 ## Initializing backend and client
   cd into client and run
-  ### npm install
+  ```npm install```
   repeat for the backend
 
 ## Environment Variables
@@ -26,12 +26,12 @@ For local development front end should be ```http://127.0.0.1:5173/```
   VITE_BACKEND = <Backend host url>
   VITE_FRONTEND = <Client host url>
   ```
-For local development frontend should be ```http://127.0.0.1:5173/``` and backend should be ```http://localhost:8888/''''
+For local development frontend should be ```http://127.0.0.1:5173/``` and backend should be ```http://localhost:8888/```
 
 ## Starting backend
   cd into backend folder and run following command:
-  ### npm start
+  ```npm start```
   
 ## Starting client
   cd into client and run following command:
-  ### npm run dev
+  ```npm run dev```
