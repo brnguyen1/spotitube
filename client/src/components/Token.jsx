@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useMemo, useEffect } from 'react';
-import { getAccessToken } from "../functions/api";
+import { getSpotifyAccessToken } from "../functions/api";
 
 function Token(props) {
     const { search } = useLocation();
@@ -8,7 +8,7 @@ function Token(props) {
     let query = useMemo(() => new URLSearchParams(search), [search]);
 
     useEffect(() => {
-        getAccessToken(query.get("code"))
+        getSpotifyAccessToken(query.get("code"))
     }, [query])
 
     return (

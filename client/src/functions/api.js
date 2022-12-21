@@ -18,4 +18,4 @@ function postPlaylist(item) {
     return axios.post(import.meta.env.VITE_BACKEND + "spotify/playlists", { accessToken: sessionStorage.getItem("spotifyAccessToken"), playlist: item })
 }
 
-export { getSpotifyAccessLink as getAccessLink, getSpotifyAccessToken, getPlaylists, postPlaylist }
+export { getSpotifyAccessLink, getSpotifyAccessToken, getPlaylists, postPlaylist }
