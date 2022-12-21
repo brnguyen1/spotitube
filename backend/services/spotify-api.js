@@ -56,7 +56,7 @@ async function get_tracks(playlist, access_token) {
 
     info = { "name": playlist.name, "desc": playlist.description, "tracks": [] }
     res.data.items.map(track => {
-        info["tracks"].push(track.track.album.name + " by " + track.track.album.artists[0].name)
+        info["tracks"].push(track.track.name + " by " + track.track.artists[0].name)
     })
 
     return info

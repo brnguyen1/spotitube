@@ -7,10 +7,9 @@ router.get('/', function (req, res) {
     res.send(a_link)
 });
 
-
-router.get('/auth-code', function(req, res) {
-    ssn = req.session
-    console.log(ssn.accessToken)
+router.get('/token', async function(req, res) {
+    let accessToken = await api.youtube_access_token(req.query.code)
+    res.json(accessToken)
 })
 
 module.exports = router;

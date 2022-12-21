@@ -10,7 +10,8 @@ function App() {
     <Routes>
       <Route path='/' element={<Authorize />} />
       <Route path='/playlists' element={<Playlists />} />
-      <Route path='/callback' element={<Token />} />
+      <Route path='/callback' element={<Token type="spotify" />} />
+      <Route path='/youtube' element={<Token type="youtube" />} />
     </Routes>
   )
 }

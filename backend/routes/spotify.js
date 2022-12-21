@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const api = require('../services/spotify-api')
+const api = require('../services/spotify-api');
+const { insert_playlist } = require('../services/youtube-api');
 
 router.get('/', function (req, res) {
     var a_link = api.authorize_link("spotify");
@@ -31,10 +32,9 @@ router.get('/playlists', (req, res) => {
 })
 
 router.post('/playlists', async (req, res) => {
-    let tracks = await api.get_tracks(req.body.playlist, req.body.accessToken)
-    console.log(tracks)
-    // let a_link = api.authorize_link("youtube")
-    res.send(tracks)
+    let playlist = await api.get_tracks(req.body.playlist, req.body.accessToken)
+    insert_playlist(playlist)
+    res.send(playlist)
 })
 
 module.exports = router;

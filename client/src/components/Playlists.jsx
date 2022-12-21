@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getPlaylists, postPlaylist } from '../functions/api';
 import '../App.css';
+import Header from './Header';
 
 function Table(props) {
   return (
@@ -37,7 +38,8 @@ function Playlists() {
   }, [])
 
   return (
-    <div>
+    <div className='container'>
+      <Header />
       <Table playlists={playlists} onClick={postPlaylist} />
     </div>
   )

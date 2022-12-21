@@ -1,5 +1,6 @@
 import axios from "axios"
 
+// Spotify
 function getSpotifyAccessLink() {
     return axios.get(import.meta.env.VITE_BACKEND + 'spotify/')
 }
@@ -18,4 +19,16 @@ function postPlaylist(item) {
     return axios.post(import.meta.env.VITE_BACKEND + "spotify/playlists", { accessToken: sessionStorage.getItem("spotifyAccessToken"), playlist: item })
 }
 
-export { getSpotifyAccessLink, getSpotifyAccessToken, getPlaylists, postPlaylist }
+// Youtube
+function getYoutubeAccessLink() {
+    return axios.get(import.meta.env.VITE_BACKEND + 'youtube/')
+}
+
+function getYoutubeAccessToken(code) {
+    return axios.get(import.meta.env.VITE_BACKEND + 'youtube/token', { params: { code: code } }).then(res => {
+        sessionStorage.setItem("youtubeAccessToken", res.data);
+    })
+}
+
+
+export { getSpotifyAccessLink, getSpotifyAccessToken, getYoutubeAccessLink, getYoutubeAccessToken, getPlaylists, postPlaylist }
