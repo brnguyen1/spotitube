@@ -11,20 +11,23 @@ function Authorize() {
 
   useEffect(() => {
     getSpotifyAccessLink().then(res => {
-      setSpotifyLink(res.data)
+      setSpotifyLink(res.data);
     });
 
     getYoutubeAccessLink().then(res => {
-      setYoutubeLink(res.data)
+      setYoutubeLink(res.data);
     })
 
-    if(sessionStorage.getItem("spotifyAccessToken")){
-      setSpotifyAuth(true)
-    }
-    if(sessionStorage.getItem("youtubeAccessToken")){
-      setYoutubeAuth(true)
-    }
-    console.log(spotifyAuth, youtubeAuth)
+    let authInterval = setInterval(() => {
+      if (sessionStorage.getItem("spotifyAccessToken")) {
+        setSpotifyAuth(true);
+      }
+      if (sessionStorage.getItem("youtubeAccessToken")) {
+        setYoutubeAuth(true);
+      }
+    }, 100)
+
+    return () => clearInterval(authInterval);
   }, [])
 
 
