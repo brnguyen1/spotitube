@@ -26,30 +26,32 @@ async function youtube_access_token(code) {
     return tokens.access_token;
 }
 
-async function insert_track(playlist_id, track) {
+async function insert_tracks(playlist_id, tracks, index = 0) {
     const youtube = google.youtube({
         version: "v3",
         auth: oauth2Client
     });
 
-    let search_res = youtube.search.list({
+    let curr_track = tracks[index];
+
+    let search_res = await youtube.search.list({
         "part": [
             "snippet"
         ],
         "maxResults": 1,
-        "q": track,
+        "q": curr_track,
         "type": "video",
     });
 
     let track_id = search_res.data.items[0].id.videoId;
-
-    youtube.playlistItems.insert({
+    let insert_res = youtube.playlistItems.insert({
         "part": [
             "snippet"
         ],
         "resource": {
             "snippet": {
                 "playlistId": playlist_id,
+                "position": 0,
                 "resourceId": {
                     "kind": "youtube#video",
                     "videoId": track_id,
@@ -57,6 +59,13 @@ async function insert_track(playlist_id, track) {
             }
         }
     })
+
+    setTimeout(function () {
+        index++;
+        if (index < tracks.length)
+            insert_tracks(playlist_id, tracks, index);
+    }, 1000);
+
 }
 
 async function insert_playlist(playlist) {
@@ -65,7 +74,7 @@ async function insert_playlist(playlist) {
         auth: oauth2Client
     })
 
-    let new_playlist_res = youtube.playlists.insert({
+    let new_playlist_res = await youtube.playlists.insert({
         "part": [
             "snippet, status"
         ],
@@ -83,9 +92,7 @@ async function insert_playlist(playlist) {
 
     let playlist_id = new_playlist_res.data.id;
 
-    playlist.tracks.foreach(track => {
-        insert_track(playlist_id, track);
-    });
+    insert_tracks(playlist_id, playlist.tracks)
 
 }
 

@@ -32,8 +32,8 @@ router.get('/playlists', (req, res) => {
 })
 
 router.post('/playlists', async (req, res) => {
-    let playlist = await api.get_tracks(req.body.playlist, req.body.accessToken)
-    insert_playlist(playlist)
+    let playlist = await api.get_tracks(req.body.playlist, req.body.accessToken);
+    insert_playlist(playlist);
     res.send(playlist)
 })
 
