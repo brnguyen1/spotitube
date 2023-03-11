@@ -15,14 +15,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
-//session middleware
-app.use(sessions({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-}));
-
-
 // Router
 var spotifyRouter = require('./routes/spotify');
 var youtubeRouter = require('./routes/youtube');

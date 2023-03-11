@@ -17,7 +17,6 @@ FRONTEND = <Client host url>
 YOUTUBE_CLIENT_ID = <Provided youtube client ID>
 YOUTUBE_CLIENT_SECRET = <Provided youtube client secret>
 YOUTUBE_REDIRECT_URI = <Provided youtube redirect uri>
-SESSION_SECRET = <Session Secret determined by developer>
 ```
 For local development front end should be ```http://127.0.0.1:5173/```
  

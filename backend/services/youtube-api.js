@@ -64,7 +64,7 @@ async function insert_tracks(playlist_id, tracks, index = 0) {
         index++;
         if (index < tracks.length)
             insert_tracks(playlist_id, tracks, index);
-    }, 1000);
+    }, 500);
 
 }
 
